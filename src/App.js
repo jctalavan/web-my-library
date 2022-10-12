@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import BooksList from './components/BooksList'
+import BookSearch from './components/BookSearch'
+import getBooks from './services/books/booksService'
 
 function App() {
+
+  const [books, setBooks] = useState([])
+
+  useEffect(function () {
+    getBooks()
+      .then(books => {
+        console.log(books)
+        setBooks(books)
+      })
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Mis libros</h1>
+      <BookSearch />
+      <BooksList books={books} />
     </div>
   );
 }
